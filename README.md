@@ -37,6 +37,15 @@ annual revenue, 142 clearing members. All data on this site is synthetic.
 
 ## Architecture
 
+End-to-end flow: **Capital-markets sources → Fivetran → Iceberg (MDLS) → Snowflake / Athena / Trino → dbt Labs → React.**
+
+1. **Capital-markets sources** — FIX 4.4/5.0 gateway, market data feed handler, clearinghouse, CFTC EDGAR, FINRA filings, Salesforce CRM, reference data.
+2. **Fivetran** — 7 connectors (jason_chletsos_ schemas) land every CDC row into Iceberg.
+3. **Iceberg (MDLS) on S3** — one copy of the bytes in open Apache Iceberg v2 format; bronze, silver, gold, platinum prefixes.
+4. **Snowflake / Athena / Trino** — all three engines read the same Iceberg bytes via external table catalogs (no copies, no extracts).
+5. **dbt Labs** — Fivetran Transformations triggers dbt the moment each sync finishes; bronze → silver → gold → platinum materialization stays in Iceberg (351 models, 960 tests).
+6. **React** — static SPA reads the JSON snapshot derived from gold/platinum.
+
 ```
 FIX 4.4/5.0 gateway · Market data feed handler · Clearinghouse
 CFTC EDGAR · FINRA filings · Salesforce CRM · Reference data
@@ -44,16 +53,23 @@ CFTC EDGAR · FINRA filings · Salesforce CRM · Reference data
               ▼  Fivetran (7 connectors, jason_chletsos_ schemas)
               │
    ┌──────────────────────────────────────┐
-   │  S3 + Apache Iceberg v2              │
+   │  Iceberg (MDLS) on S3                │
+   │  Apache Iceberg v2                   │
    │  bronze · silver · gold · platinum   │
    └──────────────────────────────────────┘
               │
-              ▼  dbt-snowflake (351 models, 960 tests)
+              ▼  External Iceberg reads (same bytes, no copies)
               │
    ┌──────────────────────────────────────┐
-   │  Snowflake · AWS Athena              │
+   │  Snowflake · AWS Athena · Trino      │
+   └──────────────────────────────────────┘
+              │
+              ▼  dbt Labs — triggered by Fivetran (351 models, 960 tests)
+              │
+   ┌──────────────────────────────────────┐
    │  Tableau · Power BI · Cortex Agents  │
    │  Surveillance app · dbt-wizard       │
+   │  React SPA (this site)               │
    └──────────────────────────────────────┘
 ```
 

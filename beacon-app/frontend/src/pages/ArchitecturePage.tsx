@@ -40,7 +40,7 @@ export default function ArchitecturePage() {
       <Hero
         eyebrow="Reference Architecture · CTO/CDO scenario"
         title="ODI for a derivatives exchange"
-        subtitle="Replacing on-prem Striim with Fivetran. Seven sources land into one open Iceberg lake with sub-second freshness on FIX messages. dbt builds bronze, silver, gold, platinum. Snowflake, Athena, Tableau, Power BI, the surveillance app, and dbt-wizard sub-agents all read the same governed tables."
+        subtitle="Data Flow: Capital markets sources → Fivetran → Iceberg (MDLS) → Snowflake / Athena / Trino → dbt Labs → React. Replacing on-prem Striim with Fivetran. Fivetran lands every CDC row into Iceberg (MDLS) on S3 in open Apache Iceberg format — one copy of the bytes. Snowflake, Athena, and Trino all read the same Iceberg bytes via external table catalogs — no copies, no extracts. Fivetran Transformations triggers dbt Labs the moment the source sync finishes; bronze, silver, gold, platinum materialization stays in Iceberg."
       />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">

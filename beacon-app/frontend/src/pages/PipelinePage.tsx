@@ -37,8 +37,8 @@ export default function PipelinePage() {
     <div>
       <Hero
         eyebrow={`Pipeline · Refreshed ${new Date(pipe.data.refreshed_at).toLocaleString()}`}
-        title="Fivetran connectors + dbt layers"
-        subtitle="Seven Fivetran connectors land trading, clearing, regulatory, and member data into Iceberg. dbt models flow bronze, silver, gold, platinum. Toggle the failure simulator to see how a FIX-gateway outage cascades into a regulatory-submission risk."
+        title="Capital markets sources → Iceberg → multi-engine, end-to-end"
+        subtitle="Seven Fivetran connectors land trading, clearing, regulatory, and member CDC rows into Iceberg (MDLS) on S3 — one copy of the bytes. Snowflake, Athena, and Trino all read the same Iceberg tables via external catalogs — no copies, no extracts. Triggered by Fivetran, dbt Labs flows bronze, silver, gold, platinum the moment each sync finishes. Toggle the failure simulator to see how a FIX-gateway outage cascades into a regulatory-submission risk."
         rightSlot={
           <button
             onClick={() => setSimulateFailure((v) => !v)}

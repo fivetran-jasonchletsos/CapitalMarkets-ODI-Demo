@@ -168,9 +168,10 @@ export default function Layout() {
           <div>
             <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-gold-bright mb-2">Data Pipeline</div>
             <p className="leading-relaxed text-white/70">
-              FIX gateway, market data handlers, clearinghouse, CFTC EDGAR, Salesforce member CRM into
-              Fivetran, then Snowflake plus Iceberg lake, then dbt (bronze, silver, gold), then static
-              JSON snapshot.
+              FIX gateway, market data handlers, clearinghouse, CFTC EDGAR, Salesforce member CRM
+              into Fivetran, then Iceberg (MDLS) on S3, then Snowflake / Athena / Trino reading the
+              same bytes via external catalogs, then Fivetran-triggered dbt Labs (bronze, silver,
+              gold), then static JSON snapshot to React.
             </p>
           </div>
           <div>

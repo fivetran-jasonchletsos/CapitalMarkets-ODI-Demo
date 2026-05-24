@@ -6,7 +6,7 @@ export default function AboutPage() {
       <Hero
         eyebrow="ODI Reference Build · Capital Markets"
         title="About Beacon Markets"
-        subtitle="A reference build that shows how a multi-asset-class derivatives exchange can run trading, surveillance, clearing, and regulatory reporting on Fivetran's Open Data Infrastructure — FIX order/execution data joined to market data, clearinghouse, CFTC, FINRA, and member CRM, landed in an open Iceberg lake, transformed by dbt, exposed to humans and agents through one governed semantic layer."
+        subtitle="A reference build that shows how a multi-asset-class derivatives exchange can run trading, surveillance, clearing, and regulatory reporting on Fivetran's Open Data Infrastructure: capital-markets sources → Fivetran → Iceberg (MDLS) → Snowflake / Athena / Trino → dbt Labs → React. FIX order/execution data joined to market data, clearinghouse, CFTC, FINRA, and member CRM, landed in an open Iceberg lake, read by multiple engines on the same bytes, transformed by dbt, exposed to humans and agents through one governed semantic layer."
       />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
@@ -19,8 +19,11 @@ export default function AboutPage() {
             <em>"MDS was optimized for humans. ODI is designed for a future with humans and
             production agents at scale."</em> This demo is one instance of that architecture:
             Fivetran's 750+ connectors and Managed Data Lake Service (MDLS) land FIX, clearing,
-            and regulatory data into open table formats; dbt transformations build the governed
-            semantic layer; multiple compute engines and AI agents read the same gold tables.
+            and regulatory CDC rows into Iceberg on S3 — one copy of the bytes. Snowflake,
+            Athena, and Trino read the same Iceberg tables via external catalogs (no copies,
+            no extracts). Fivetran Transformations triggers dbt Labs the moment each sync
+            finishes; bronze, silver, gold, platinum materialization stays in Iceberg, and
+            multiple compute engines and AI agents read the same gold tables.
           </p>
           <a
             href="https://fivetran-jasonchletsos.github.io/Fivetran-Demo-Repository/story/"
@@ -138,7 +141,7 @@ const PILLARS = [
   {
     tag: 'Pillar 1',
     title: 'Customer-owned storage',
-    body: 'Every byte of FIX, market-data, clearing, and regulatory data lands in Beacon\'s S3 bucket as Apache Iceberg tables. Fivetran writes; Beacon reads with Snowflake, Athena, Spark, or anything else.',
+    body: 'Every byte of FIX, market-data, clearing, and regulatory data lands in Beacon\'s S3 bucket as Apache Iceberg tables (MDLS) — one copy of the bytes. Fivetran writes; Snowflake, Athena, and Trino all read the same Iceberg tables via external catalogs (no copies, no extracts).',
   },
   {
     tag: 'Pillar 2',
@@ -157,8 +160,8 @@ const STACK = [
   { layer: 'Storage',   name: 'Amazon S3',                      note: 'beacon-odi-lake bucket — bronze, silver, gold, platinum prefixes' },
   { layer: 'Format',    name: 'Apache Iceberg v2',              note: 'Parquet + ZSTD compression, partitioned by trade_date and product_id' },
   { layer: 'Catalog',   name: 'Snowflake Horizon',              note: 'Iceberg REST catalog + tag-based access control by desk and asset class' },
-  { layer: 'Transform', name: 'dbt-snowflake',                  note: 'Bronze, silver, gold, platinum · 351 models, 960 tests' },
-  { layer: 'Query',     name: 'Snowflake + AWS Athena',         note: 'Both engines read the same Iceberg tables — no replication' },
+  { layer: 'Query',     name: 'Snowflake / Athena / Trino',     note: 'All three engines read the same Iceberg bytes via external catalogs — no copies, no extracts' },
+  { layer: 'Transform', name: 'dbt Labs (Snowflake adapter)',    note: 'Triggered by Fivetran Transformations the moment each sync finishes · Bronze, silver, gold, platinum · 351 models, 960 tests' },
   { layer: 'Agents',    name: 'dbt-wizard Sub-agents',          note: 'Read platinum.sem_market_intel, author missing gold models in 92s' },
   { layer: 'Frontend',  name: 'React 18 + Vite + Tailwind 3',   note: 'Static SPA on GitHub Pages, reads JSON snapshot, Recharts' },
 ];
