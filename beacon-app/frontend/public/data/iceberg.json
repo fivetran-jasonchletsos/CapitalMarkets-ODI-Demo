@@ -1,0 +1,75 @@
+{
+  "schema": "iceberg_lineage_v1",
+  "catalog": "snowflake_horizon",
+  "database": "beacon_lake",
+  "storage": "s3://beacon-odi-lake/",
+  "nodes": [
+    { "id": "fix_gw",      "label": "FIX gateway (4.4/5.0)",         "layer": "source", "type": "messaging",    "rows": "142M/day" },
+    { "id": "mdfh",        "label": "market-data feed handler",      "layer": "source", "type": "stream",       "rows": "2.8B/day" },
+    { "id": "clearing",    "label": "clearinghouse",                 "layer": "source", "type": "post-trade",   "rows": "8.4M/day" },
+    { "id": "cftc",        "label": "CFTC EDGAR",                    "layer": "source", "type": "regulatory",   "rows": "4.2K/day" },
+    { "id": "finra",       "label": "FINRA CAT / 13H",               "layer": "source", "type": "regulatory",   "rows": "18K/day" },
+    { "id": "crm",         "label": "Salesforce CRM",                "layer": "source", "type": "crm",          "rows": "24K/day" },
+    { "id": "refdata",     "label": "reference data (CUSIP/ISIN)",   "layer": "source", "type": "reference",    "rows": "4.8K/day" },
+
+    { "id": "br_fix",      "label": "bronze.fix_execution_report",   "layer": "bronze", "type": "iceberg",      "rows": "142M" },
+    { "id": "br_md",       "label": "bronze.market_data_tick",       "layer": "bronze", "type": "iceberg",      "rows": "2.8B" },
+    { "id": "br_clear",    "label": "bronze.cleared_trade",          "layer": "bronze", "type": "iceberg",      "rows": "8.4M" },
+    { "id": "br_cftc",     "label": "bronze.cftc_filing",            "layer": "bronze", "type": "iceberg",      "rows": "4.2K" },
+    { "id": "br_finra",    "label": "bronze.finra_cat_event",        "layer": "bronze", "type": "iceberg",      "rows": "38M" },
+    { "id": "br_crm",      "label": "bronze.member_account",         "layer": "bronze", "type": "iceberg",      "rows": "24K" },
+    { "id": "br_ref",      "label": "bronze.product_reference",      "layer": "bronze", "type": "iceberg",      "rows": "4.8K" },
+
+    { "id": "si_trade",    "label": "silver.fct_trade_event",        "layer": "silver", "type": "iceberg",      "rows": "142M" },
+    { "id": "si_quote",    "label": "silver.fct_quote_snapshot_1s",  "layer": "silver", "type": "iceberg",      "rows": "612M" },
+    { "id": "si_order",    "label": "silver.fct_order_lifecycle",    "layer": "silver", "type": "iceberg",      "rows": "284M" },
+    { "id": "si_member",   "label": "silver.dim_member",             "layer": "silver", "type": "iceberg",      "rows": "142" },
+    { "id": "si_product",  "label": "silver.dim_product",            "layer": "silver", "type": "iceberg",      "rows": "4.8K" },
+    { "id": "si_clearpos", "label": "silver.fct_clearing_position",  "layer": "silver", "type": "iceberg",      "rows": "1.2M" },
+
+    { "id": "go_vol",      "label": "gold.fct_volume_by_product_min","layer": "gold",   "type": "iceberg",      "rows": "412K" },
+    { "id": "go_share",    "label": "gold.fct_market_share_daily",   "layer": "gold",   "type": "iceberg",      "rows": "16K" },
+    { "id": "go_surv",     "label": "gold.fct_alert_evidence",       "layer": "gold",   "type": "iceberg",      "rows": "1.3K/day" },
+    { "id": "go_var",      "label": "gold.fct_var_house_daily",      "layer": "gold",   "type": "iceberg",      "rows": "180" },
+    { "id": "go_margin",   "label": "gold.fct_clearing_margin_daily","layer": "gold",   "type": "iceberg",      "rows": "142" },
+    { "id": "go_part45",   "label": "gold.fct_part45_sdr_submission","layer": "gold",   "type": "iceberg",      "rows": "8.4M/day" },
+
+    { "id": "pl_sem",      "label": "platinum.sem_market_intel",     "layer": "platinum","type": "iceberg",     "rows": "—" }
+  ],
+  "edges": [
+    { "from": "fix_gw",   "to": "br_fix",    "via": "Fivetran" },
+    { "from": "mdfh",     "to": "br_md",     "via": "Fivetran" },
+    { "from": "clearing", "to": "br_clear",  "via": "Fivetran" },
+    { "from": "cftc",     "to": "br_cftc",   "via": "Fivetran" },
+    { "from": "finra",    "to": "br_finra",  "via": "Fivetran" },
+    { "from": "crm",      "to": "br_crm",    "via": "Fivetran" },
+    { "from": "refdata",  "to": "br_ref",    "via": "Fivetran" },
+
+    { "from": "br_fix",   "to": "si_trade",  "via": "dbt" },
+    { "from": "br_fix",   "to": "si_order",  "via": "dbt" },
+    { "from": "br_md",    "to": "si_quote",  "via": "dbt" },
+    { "from": "br_clear", "to": "si_clearpos","via":"dbt" },
+    { "from": "br_crm",   "to": "si_member", "via": "dbt" },
+    { "from": "br_ref",   "to": "si_product","via": "dbt" },
+
+    { "from": "si_trade",   "to": "go_vol",    "via": "dbt" },
+    { "from": "si_trade",   "to": "go_share",  "via": "dbt" },
+    { "from": "si_order",   "to": "go_surv",   "via": "dbt" },
+    { "from": "si_quote",   "to": "go_surv",   "via": "dbt" },
+    { "from": "si_clearpos","to": "go_var",    "via": "dbt" },
+    { "from": "si_clearpos","to": "go_margin", "via": "dbt" },
+    { "from": "si_trade",   "to": "go_part45", "via": "dbt" },
+
+    { "from": "go_vol",     "to": "pl_sem",   "via": "dbt" },
+    { "from": "go_share",   "to": "pl_sem",   "via": "dbt" },
+    { "from": "go_surv",    "to": "pl_sem",   "via": "dbt" },
+    { "from": "go_var",     "to": "pl_sem",   "via": "dbt" }
+  ],
+  "consumers": [
+    { "name": "Snowflake Cortex Agent — Market Ops",     "reads": "platinum.sem_market_intel" },
+    { "name": "Tableau exec dashboard",                  "reads": "gold.fct_volume_by_product_min, gold.fct_market_share_daily" },
+    { "name": "Power BI risk officers",                  "reads": "gold.fct_var_house_daily, gold.fct_clearing_margin_daily" },
+    { "name": "Surveillance app (in-house)",             "reads": "gold.fct_alert_evidence" },
+    { "name": "CFTC Part 45 SDR submission pipeline",    "reads": "gold.fct_part45_sdr_submission" }
+  ]
+}

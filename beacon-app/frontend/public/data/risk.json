@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-05-23T22:00:00Z",
+  "house_var": {
+    "var_95_usd": 184000000,
+    "var_99_usd": 312000000,
+    "stress_2008_usd": 612000000,
+    "stress_covid_usd": 482000000
+  },
+  "margin": {
+    "total_margin_required_usd": 18400000000,
+    "total_margin_posted_usd": 21800000000,
+    "utilization_pct": 84.4,
+    "concentration_top5_pct": 38.2
+  },
+  "collateral_mix": [
+    { "type": "US Treasuries", "share_pct": 62.4 },
+    { "type": "Cash USD",      "share_pct": 22.1 },
+    { "type": "Cash EUR",      "share_pct": 6.4  },
+    { "type": "Gilts",         "share_pct": 4.8  },
+    { "type": "Money-market",  "share_pct": 4.3  }
+  ],
+  "top_members": [
+    { "member": "Halcyon FCM",       "net_exposure_usd": 4120000000, "margin_posted_usd": 4480000000, "margin_required_usd": 3820000000, "concentration_pct": 22.4 },
+    { "member": "Pediment Partners", "net_exposure_usd": 2880000000, "margin_posted_usd": 3120000000, "margin_required_usd": 2640000000, "concentration_pct": 15.7 },
+    { "member": "Altavest Capital",  "net_exposure_usd": 2640000000, "margin_posted_usd": 2820000000, "margin_required_usd": 2410000000, "concentration_pct": 14.4 },
+    { "member": "Northgate Sec.",    "net_exposure_usd": 1840000000, "margin_posted_usd": 2010000000, "margin_required_usd": 1680000000, "concentration_pct": 10.0 },
+    { "member": "Crestline Energy",  "net_exposure_usd": 1620000000, "margin_posted_usd": 1780000000, "margin_required_usd": 1490000000, "concentration_pct": 8.8  }
+  ],
+  "fee_revenue_30d": [
+    { "date": "04-24", "fees_usd": 6800000 }, { "date": "04-29", "fees_usd": 7140000 },
+    { "date": "05-04", "fees_usd": 7020000 }, { "date": "05-09", "fees_usd": 7280000 },
+    { "date": "05-14", "fees_usd": 7320000 }, { "date": "05-19", "fees_usd": 7460000 },
+    { "date": "05-23", "fees_usd": 7280000 }
+  ]
+}

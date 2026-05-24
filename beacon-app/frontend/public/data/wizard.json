@@ -1,0 +1,41 @@
+{
+  "scenario": {
+    "company": "Beacon Markets",
+    "requested_by": "Chief Risk Officer",
+    "request_id": "REQ-2026-05-23-07744",
+    "question": "Show me intraday concentration of open interest by member, broken out by product, in 15-minute buckets — for the rates complex over the last 5 trading days.",
+    "target_model": "gold.fct_member_oi_concentration_15m",
+    "target_grain": "(member_id, product_id, dt, bucket_15m) — primary key",
+    "manual_time_days": "5 to 8 days",
+    "build_room_seconds": 92,
+    "risk_at_stake_usd": "184M",
+    "deadline": "Risk Committee meeting in 14 hours"
+  },
+  "upstream_models": [
+    { "model": "silver.fct_order_lifecycle",    "layer": "silver", "grain": "order_id × event_ts",          "description": "Every order add / modify / cancel / fill from FIX gateway." },
+    { "model": "silver.fct_trade_event",        "layer": "silver", "grain": "trade_id",                     "description": "Cleared, novated executions joined to product reference." },
+    { "model": "silver.fct_clearing_position",  "layer": "silver", "grain": "member × product × dt",        "description": "End-of-day position from clearinghouse — needs intraday derivation." },
+    { "model": "silver.dim_member",             "layer": "silver", "grain": "member_id",                    "description": "Clearing-member reference: parent, FCM type, KYC tier." }
+  ],
+  "agents": [
+    { "id": "explorer",     "name": "Explorer",     "tools": "dbt status, dbt search",       "color": "#d4af37" },
+    { "id": "summary",      "name": "Summary",      "tools": "dbt describe, dbt lineage",    "color": "#7c3aed" },
+    { "id": "worker",       "name": "Worker",       "tools": "dbt warehouse, dbt_show, edit","color": "#ea580c" },
+    { "id": "verification", "name": "Verification", "tools": "dbt test, dbt docs generate",  "color": "#10e88a" }
+  ],
+  "steps": [
+    { "n": 1, "agent": "Explorer",     "label": "Discovery",            "insight": "4 silver candidates identified", "note": "dbt search 'open interest' returns fct_clearing_position. dbt status confirms 0 gold models cover member × product × 15m grain." },
+    { "n": 2, "agent": "Summary",      "label": "Schema understanding", "insight": "1 join key gap on bucket_15m",   "note": "Lineage trace shows silver tables are intraday; 15-min bucket needs to be derived from event_ts using date_trunc('minute') with floor() to 15." },
+    { "n": 3, "agent": "Worker",       "label": "Data inspection",      "insight": "XS warehouse, 4M rows / 28s",   "note": "dbt_show pulls a 5-day slice into an XS warehouse to validate the join. Row counts match. No null members." },
+    { "n": 4, "agent": "Worker",       "label": "Model creation",       "insight": "fct_member_oi_concentration_15m authored", "note": "SQL written: aggregate cumulative position by member × product, bucketed 15-min, with running OI and pct-of-total." },
+    { "n": 5, "agent": "Verification", "label": "Test authoring",       "insight": "9 tests added, 1 uniqueness",   "note": "YAML written. Uniqueness on (member_id, product_id, dt, bucket_15m). Not-null on member_id, product_id, oi_contracts. Accepted-range on oi_pct between 0 and 100." },
+    { "n": 6, "agent": "Worker + Ver", "label": "Materialization",      "insight": "412 rows × 5 days, iceberg",    "note": "dbt run materializes to gold/Iceberg. Snowflake Cortex agent + Tableau risk dashboard pick it up on next read. Risk Committee briefing now uses live numbers." }
+  ],
+  "outcome": {
+    "build_seconds": 92,
+    "model_rows_per_day": 41200,
+    "tests_passing": 9,
+    "downstream_consumers": ["Cortex agent · Market Intel", "Risk Committee dashboard", "CFTC large-trader report"],
+    "callout": "From CRO's question to a tested, materialized, queryable gold model in 92 seconds — manual ETA was 5 to 8 days. The Risk Committee gets live numbers."
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "pipeline_v1",
+  "refreshed_at": "2026-05-23T22:00:00Z",
+  "connectors": [
+    {
+      "name": "FIX 4.4/5.0 message gateway",
+      "source": "Order & execution stream",
+      "mechanism": "Fivetran HVR (log-based)",
+      "fivetran_id": "jason_chletsos_fix_gateway",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_fix_gateway",
+      "status": "healthy",
+      "last_sync_minutes": 1,
+      "rows_synced_24h": 142800000,
+      "latency_target_min": 1,
+      "note": null
+    },
+    {
+      "name": "Market data feed handler",
+      "source": "Refinitiv + Bloomberg + internal",
+      "mechanism": "Fivetran Connector SDK",
+      "fivetran_id": "jason_chletsos_market_data",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_market_data",
+      "status": "healthy",
+      "last_sync_minutes": 2,
+      "rows_synced_24h": 2840000000,
+      "latency_target_min": 5,
+      "note": null
+    },
+    {
+      "name": "Clearinghouse",
+      "source": "Cleared-trade + margin postings",
+      "mechanism": "Fivetran",
+      "fivetran_id": "jason_chletsos_clearing",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_clearing",
+      "status": "healthy",
+      "last_sync_minutes": 4,
+      "rows_synced_24h": 8420000,
+      "latency_target_min": 5,
+      "note": null
+    },
+    {
+      "name": "CFTC EDGAR",
+      "source": "Regulatory filings",
+      "mechanism": "Fivetran",
+      "fivetran_id": "jason_chletsos_cftc_edgar",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_cftc_edgar",
+      "status": "healthy",
+      "last_sync_minutes": 18,
+      "rows_synced_24h": 4200,
+      "latency_target_min": 60,
+      "note": null
+    },
+    {
+      "name": "FINRA filings",
+      "source": "CAT + 13H + ATS reports",
+      "mechanism": "Fivetran",
+      "fivetran_id": "jason_chletsos_finra",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_finra",
+      "status": "healthy",
+      "last_sync_minutes": 22,
+      "rows_synced_24h": 18400,
+      "latency_target_min": 60,
+      "note": null
+    },
+    {
+      "name": "Member CRM",
+      "source": "Salesforce — onboarding & KYC",
+      "mechanism": "Fivetran",
+      "fivetran_id": "jason_chletsos_salesforce_crm",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_salesforce_crm",
+      "status": "healthy",
+      "last_sync_minutes": 14,
+      "rows_synced_24h": 24800,
+      "latency_target_min": 30,
+      "note": null
+    },
+    {
+      "name": "Reference data",
+      "source": "CUSIP, ISIN, contract specs",
+      "mechanism": "Fivetran",
+      "fivetran_id": "jason_chletsos_reference_data",
+      "fivetran_url": "https://fivetran.com/dashboard/connectors/jason_chletsos_reference_data",
+      "status": "degraded",
+      "last_sync_minutes": 38,
+      "rows_synced_24h": 4800,
+      "latency_target_min": 60,
+      "note": "ISIN refresh feed slow — investigating with vendor"
+    }
+  ],
+  "layers": [
+    { "layer": "bronze",   "name": "Raw landing (Iceberg)",      "tables": 218, "last_run_min": 2,  "status": "healthy", "tests_passing": 412, "tests_total": 412 },
+    { "layer": "silver",   "name": "Conformed + cleansed",       "tables": 88,  "last_run_min": 6,  "status": "healthy", "tests_passing": 292, "tests_total": 296 },
+    { "layer": "gold",     "name": "Business marts",             "tables": 34,  "last_run_min": 9,  "status": "healthy", "tests_passing": 188, "tests_total": 188 },
+    { "layer": "platinum", "name": "Agent + semantic layer",     "tables": 11,  "last_run_min": 9,  "status": "healthy", "tests_passing": 64,  "tests_total": 64  }
+  ],
+  "recent_runs": [
+    { "run_id": "r_28842", "model": "gold.fct_volume_by_product_minute", "status": "success", "duration_s": 42,  "rows": 412000,  "started_at": "2026-05-23T21:48:00Z" },
+    { "run_id": "r_28841", "model": "gold.fct_alert_evidence",            "status": "success", "duration_s": 28,  "rows": 1284,    "started_at": "2026-05-23T21:46:00Z" },
+    { "run_id": "r_28840", "model": "silver.fct_trade_event",             "status": "success", "duration_s": 184, "rows": 142800000,"started_at": "2026-05-23T21:42:00Z" },
+    { "run_id": "r_28839", "model": "gold.fct_clearing_margin_daily",     "status": "success", "duration_s": 38,  "rows": 142,     "started_at": "2026-05-23T21:38:00Z" },
+    { "run_id": "r_28838", "model": "silver.dim_member",                  "status": "success", "duration_s": 8,   "rows": 142,     "started_at": "2026-05-23T21:36:00Z" }
+  ],
+  "failure_sim": {
+    "enabled": true,
+    "note": "Toggle the FIX gateway to FAIL — surveillance models on the gold layer go stale, alert evidence stops being produced, and the Part 45 SDR submission queue backs up against the T+1 06:00 ET deadline."
+  }
+}

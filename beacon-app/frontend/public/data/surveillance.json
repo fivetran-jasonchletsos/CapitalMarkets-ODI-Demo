@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-05-23T22:00:00Z",
+  "summary": {
+    "alerts_24h": 1284,
+    "alerts_critical": 18,
+    "false_positive_pct": 12.4,
+    "median_time_to_review_min": 7.2,
+    "members_under_review": 4
+  },
+  "top_patterns": [
+    { "rank": 1, "pattern": "Spoofing — layered cancels", "alerts_24h": 412, "products": "ZB, ZN, ZF", "trend": "+18%" },
+    { "rank": 2, "pattern": "Wash trades — same-beneficiary",  "alerts_24h": 286, "products": "CL, NG",     "trend": "+4%"  },
+    { "rank": 3, "pattern": "Marking the close",               "alerts_24h": 194, "products": "ES, NQ",     "trend": "-6%"  },
+    { "rank": 4, "pattern": "Quote stuffing",                  "alerts_24h": 168, "products": "ZB",         "trend": "+22%" },
+    { "rank": 5, "pattern": "Cross-product manipulation",      "alerts_24h": 124, "products": "CL/HO/RB",   "trend": "+9%"  }
+  ],
+  "recent_alerts": [
+    { "alert_id": "ALT-2026-58841", "ts": "2026-05-23T14:42:18Z", "member": "Halcyon FCM",      "product": "ZB",  "pattern": "Spoofing — layered cancels",  "severity": "critical", "status": "open"      },
+    { "alert_id": "ALT-2026-58840", "ts": "2026-05-23T14:38:02Z", "member": "Crestline Energy", "product": "CL",  "pattern": "Wash trades",                 "severity": "high",     "status": "in review" },
+    { "alert_id": "ALT-2026-58839", "ts": "2026-05-23T14:31:55Z", "member": "Pediment Partners","product": "ZB",  "pattern": "Quote stuffing",              "severity": "high",     "status": "in review" },
+    { "alert_id": "ALT-2026-58838", "ts": "2026-05-23T14:28:11Z", "member": "Northgate Sec.",   "product": "ES",  "pattern": "Marking the close",           "severity": "medium",   "status": "open"      },
+    { "alert_id": "ALT-2026-58837", "ts": "2026-05-23T14:22:46Z", "member": "Altavest Capital", "product": "ZN",  "pattern": "Spoofing — layered cancels",  "severity": "high",     "status": "open"      },
+    { "alert_id": "ALT-2026-58836", "ts": "2026-05-23T14:18:09Z", "member": "Halcyon FCM",      "product": "CL",  "pattern": "Cross-product manipulation",  "severity": "medium",   "status": "in review" },
+    { "alert_id": "ALT-2026-58835", "ts": "2026-05-23T14:14:30Z", "member": "Crestline Energy", "product": "NG",  "pattern": "Wash trades",                 "severity": "medium",   "status": "dismissed" },
+    { "alert_id": "ALT-2026-58834", "ts": "2026-05-23T14:08:18Z", "member": "Pediment Partners","product": "ZB",  "pattern": "Spoofing — layered cancels",  "severity": "critical", "status": "escalated" }
+  ],
+  "false_positive_trend_30d": [
+    { "date": "04-24", "fp_pct": 18.2 }, { "date": "04-29", "fp_pct": 17.4 }, { "date": "05-04", "fp_pct": 16.1 },
+    { "date": "05-09", "fp_pct": 15.0 }, { "date": "05-14", "fp_pct": 13.6 }, { "date": "05-19", "fp_pct": 12.9 },
+    { "date": "05-23", "fp_pct": 12.4 }
+  ]
+}

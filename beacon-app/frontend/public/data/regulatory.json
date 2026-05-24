@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-05-23T22:00:00Z",
+  "reporting": [
+    { "regime": "CFTC Part 45 — SDR reporting",  "status": "on track", "submissions_today": 8420000, "fail_pct": 0.012, "next_deadline": "T+1 06:00 ET", "owner": "Reg Ops" },
+    { "regime": "CFTC Part 43 — RT public tape", "status": "on track", "submissions_today": 8420000, "fail_pct": 0.004, "next_deadline": "continuous",   "owner": "Reg Ops" },
+    { "regime": "FINRA CAT — order lifecycle",   "status": "on track", "submissions_today": 38400000,"fail_pct": 0.021, "next_deadline": "T+1 08:00 ET", "owner": "Reg Ops" },
+    { "regime": "SEC 13H — large traders",       "status": "on track", "submissions_today": 42,      "fail_pct": 0.000, "next_deadline": "monthly",      "owner": "Compliance" },
+    { "regime": "OFAC screening",                "status": "watch",    "submissions_today": 142,     "fail_pct": 0.700, "next_deadline": "continuous",   "owner": "Compliance" }
+  ],
+  "trade_lineage": {
+    "trade_id": "TRD-20260523-08881420",
+    "product": "ZB Jun26",
+    "side": "BUY",
+    "qty": 250,
+    "price": "118-12",
+    "member": "Pediment Partners",
+    "trader": "PED-DESK-04",
+    "timestamp_utc": "2026-05-23T14:28:18.412Z",
+    "hops": [
+      { "step": 1, "system": "FIX 4.4 gateway (NJ4)",         "table": "raw_jcm_fix.execution_report",         "ts_offset_ms": 0,    "note": "MsgType=8, ExecType=F" },
+      { "step": 2, "system": "Match engine (Chicago)",        "table": "raw_jcm_match.trade_print",            "ts_offset_ms": 0.4,  "note": "matched against PED-DESK-12" },
+      { "step": 3, "system": "Clearinghouse",                 "table": "raw_jcm_clearing.cleared_trade",       "ts_offset_ms": 38,   "note": "cleared T+0, novation OK" },
+      { "step": 4, "system": "Bronze landing (Iceberg)",      "table": "bronze.fix_execution_report",          "ts_offset_ms": 412,  "note": "Fivetran CDC load" },
+      { "step": 5, "system": "Silver — conformed",            "table": "silver.fct_trade_event",               "ts_offset_ms": 8200, "note": "dbt model, joins to dim_product" },
+      { "step": 6, "system": "Gold — regulatory",             "table": "gold.fct_part45_sdr_submission",       "ts_offset_ms": 11800,"note": "ready for SDR submit at T+1" },
+      { "step": 7, "system": "Gold — surveillance",           "table": "gold.fct_alert_evidence",              "ts_offset_ms": 12400,"note": "no pattern match — clean trace" }
+    ]
+  }
+}

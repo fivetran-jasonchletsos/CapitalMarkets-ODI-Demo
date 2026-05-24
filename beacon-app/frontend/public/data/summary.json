@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-05-23T22:00:00Z",
+  "snapshot_date": "2026-05-23",
+  "company": {
+    "name": "Beacon Markets",
+    "tier": "Multi-asset-class derivatives exchange",
+    "products": ["Rates", "Energy", "Agriculture", "Equity Index"],
+    "annual_revenue_usd": 3050000000,
+    "headcount": 2240,
+    "members": ["Pediment Partners", "Altavest Capital", "Northgate Securities", "Halcyon FCM", "Crestline Energy"]
+  },
+  "kpis": [
+    { "label": "ADV (contracts)", "value": 5120000, "unit": "contracts", "delta": "+6.4%" },
+    { "label": "Txn-fee revenue (MTD)", "value": 218400000, "unit": "usd", "delta": "+4.1%" },
+    { "label": "Open interest", "value": 28400000, "unit": "contracts", "delta": "+2.3%" },
+    { "label": "Order-ack p99", "value": 412, "unit": "us", "delta": "-18us" },
+    { "label": "Clearing members", "value": 142, "unit": "", "delta": "+3" },
+    { "label": "Market share (rates)", "value": 47.2, "unit": "%", "delta": "+0.8pp" }
+  ],
+  "asset_classes": [
+    { "id": "RATES",  "name": "Rates",       "adv": 2180000, "oi": 14200000, "share_pct": 47.2, "lead_product": "10Y T-Note" },
+    { "id": "ENERGY", "name": "Energy",      "adv": 1240000, "oi": 6420000,  "share_pct": 22.1, "lead_product": "WTI Crude" },
+    { "id": "AG",     "name": "Agriculture", "adv": 820000,  "oi": 3840000,  "share_pct": 18.6, "lead_product": "Corn" },
+    { "id": "EQTY",   "name": "Equity Index","adv": 880000,  "oi": 3940000,  "share_pct": 12.1, "lead_product": "BCN-500 E-Mini" }
+  ],
+  "top_anomalies": [
+    { "rank": 1, "product": "ZB (30Y T-Bond)",  "issue": "Spoofing pattern detected — 3 members flagged on Chicago book at 09:42 CT", "severity": "critical", "owner": "Surveillance" },
+    { "rank": 2, "product": "CL (WTI Crude)",   "issue": "OI concentration on Halcyon FCM exceeds 22% of net open interest — risk review triggered", "severity": "high", "owner": "Risk" },
+    { "rank": 3, "product": "ES (BCN-500 Eq)",  "issue": "FIX order-ack p99 drifted to 612us on NJ4 matcher — above 500us SLA", "severity": "high", "owner": "Tech Ops" }
+  ]
+}
