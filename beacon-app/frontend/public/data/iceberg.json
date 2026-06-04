@@ -66,7 +66,7 @@
     { "from": "go_var",     "to": "pl_sem",   "via": "dbt" }
   ],
   "consumers": [
-    { "name": "Snowflake Cortex Agent — Market Ops",     "reads": "platinum.sem_market_intel" },
+    { "name": "Run-time agent — Market Ops",              "reads": "platinum.sem_market_intel" },
     { "name": "Tableau exec dashboard",                  "reads": "gold.fct_volume_by_product_min, gold.fct_market_share_daily" },
     { "name": "Power BI risk officers",                  "reads": "gold.fct_var_house_daily, gold.fct_clearing_margin_daily" },
     { "name": "Surveillance app (in-house)",             "reads": "gold.fct_alert_evidence" },

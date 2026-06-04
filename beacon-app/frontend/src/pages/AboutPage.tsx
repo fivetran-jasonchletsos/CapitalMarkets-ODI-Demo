@@ -60,7 +60,7 @@ export default function AboutPage() {
               brittle, expensive, and opaque. ODI replaces it — Fivetran lands all seven into
               Iceberg in the same warehouse, and dbt joins them into a single trade-event,
               order-lifecycle, surveillance, and clearing-position grain that an exchange-ops
-              director, a risk officer, a surveillance analyst, and a Cortex agent can all read.
+              director, a risk officer, a surveillance analyst, and a run-time agent can all read.
             </p>
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
               <div className="bg-navy-800/60 border border-navy-700 p-3">
@@ -69,7 +69,7 @@ export default function AboutPage() {
                   <li>· Surveillance reviews FIX dumps from yesterday's tape</li>
                   <li>· Risk officer joins clearing CSV exports to a SAS extract</li>
                   <li>· Part 45 SDR submissions are a Tibco BW job — opaque when it breaks</li>
-                  <li>· Cortex / agents have no consistent semantic layer to query</li>
+                  <li>· Run-time agents have no consistent semantic layer to query</li>
                 </ul>
               </div>
               <div className="bg-navy-800/80 border-2 border-gold p-3">
@@ -151,7 +151,7 @@ const PILLARS = [
   {
     tag: 'Pillar 3',
     title: 'Agents read gold tables',
-    body: 'The Cortex agent, the surveillance app, and the dbt-wizard sub-agents read the same gold tables the risk committee sees. One semantic layer for humans and agents.',
+    body: 'Run-time agents, the surveillance app, and the dbt-wizard sub-agents read the same gold tables the risk committee sees. One semantic layer for humans and agents.',
   },
 ];
 

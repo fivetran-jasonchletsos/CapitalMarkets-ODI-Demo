@@ -35,7 +35,7 @@ export default function SurveillancePage() {
       <Hero
         eyebrow="Surveillance · Chief Risk Officer scenario"
         title="Spoofing, layering, wash — caught at the silver layer"
-        subtitle="Order-lifecycle data from FIX joined to quote snapshots and member reference, then evaluated against pattern detectors at the silver-to-gold boundary. Surveillance officers and the Cortex agent read the same gold.fct_alert_evidence table."
+        subtitle="Order-lifecycle data from FIX joined to quote snapshots and member reference, then evaluated against pattern detectors at the silver-to-gold boundary. Surveillance officers and run-time agents read the same gold.fct_alert_evidence table."
       />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

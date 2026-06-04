@@ -67,7 +67,7 @@ CFTC EDGAR · FINRA filings · Salesforce CRM · Reference data
               ▼  dbt Labs — triggered by Fivetran (351 models, 960 tests)
               │
    ┌──────────────────────────────────────┐
-   │  Tableau · Power BI · Cortex Agents  │
+   │  Tableau · Power BI · run-time agents │
    │  Surveillance app · dbt-wizard       │
    │  React SPA (this site)               │
    └──────────────────────────────────────┘

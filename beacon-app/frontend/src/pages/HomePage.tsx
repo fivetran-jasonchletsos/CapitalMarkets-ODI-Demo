@@ -33,7 +33,7 @@ export default function HomePage() {
       <Hero
         eyebrow={`Market Operations · Snapshot ${summary.data.snapshot_date}`}
         title="Four asset classes, one signal"
-        subtitle="Beacon Markets matches rates, energy, agriculture, and equity-index derivatives across Chicago, New York, and London. This portal unifies the FIX gateway, market data, clearinghouse, regulatory filings, and member CRM into one governed semantic layer — exchange ops, surveillance, risk, and Cortex agents read the same gold tables."
+        subtitle="Beacon Markets matches rates, energy, agriculture, and equity-index derivatives across Chicago, New York, and London. This portal unifies the FIX gateway, market data, clearinghouse, regulatory filings, and member CRM into one governed semantic layer — exchange ops, surveillance, risk, and run-time agents read the same gold tables."
         rightSlot={
           <div className="border-2 border-gold bg-navy-900/80 px-6 py-5 text-right">
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-bright">Annual revenue</div>

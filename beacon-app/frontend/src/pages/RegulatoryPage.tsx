@@ -110,7 +110,7 @@ export default function RegulatoryPage() {
           <p className="text-sm text-navy-100 leading-relaxed">
             Trade <span className="font-mono text-gold-bright">{t.trade_id}</span> went from match-engine print to regulator-ready record in
             <span className="font-mono text-live"> {(t.hops[t.hops.length - 1].ts_offset_ms / 1000).toFixed(1)}s</span>.
-            Every hop is an Iceberg table — the Cortex agent, the surveillance app, the CFTC submission pipeline, and the auditor all read the same lineage.
+            Every hop is an Iceberg table — run-time agents, the surveillance app, the CFTC submission pipeline, and the auditor all read the same lineage.
           </p>
         </div>
       </section>
