@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: 612pt 792pt; margin: 0; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; width: 612pt; height: 792pt; padding: 32pt 44pt;
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a1a; background: #ffffff;
+  }
+  .eyebrow {
+    font-size: 9pt; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.14em; color: #152c4a; margin-bottom: 3pt;
+  }
+  h1 { font-size: 18pt; margin: 0 0 5pt; font-weight: 700; }
+  .sub { font-size: 9.5pt; color: #4b5563; margin: 0 0 12pt; line-height: 1.35; }
+  .tiles { display: flex; gap: 10pt; margin-bottom: 14pt; }
+  .tile {
+    flex: 1; border: 1pt solid #d9d3c4; border-radius: 3pt; padding: 8pt 10pt;
+  }
+  .tile .label { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; }
+  .tile .value { font-size: 13.5pt; font-weight: 700; margin-top: 2pt; color: #152c4a; }
+  .tile .note { font-size: 7.8pt; color: #6b7280; margin-top: 2pt; }
+  table.beats { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  table.beats th {
+    text-align: left; font-size: 7.3pt; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #6b7280; border-bottom: 1pt solid #d9d3c4; padding: 4pt 7pt;
+  }
+  table.beats td { padding: 5pt 7pt; border-bottom: 0.5pt solid #e8e4d8; vertical-align: top; line-height: 1.3; }
+  table.beats tr:last-child td { border-bottom: none; }
+  .say { color: #1a1a1a; }
+  .show { color: #152c4a; font-weight: 600; }
+  .mapping { margin-top: 10pt; }
+  .mapping .h { font-size: 7.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; margin-bottom: 4pt; }
+  table.map { width: 100%; border-collapse: collapse; font-size: 7.8pt; }
+  table.map th { text-align: left; font-size: 7pt; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; border-bottom: 1pt solid #d9d3c4; padding: 3pt 6pt; }
+  table.map td { padding: 3pt 6pt; border-bottom: 0.5pt solid #e8e4d8; font-family: "SF Mono", Menlo, monospace; }
+  .footnote { margin-top: 8pt; font-size: 7.3pt; color: #9ca3af; line-height: 1.4; }
+</style>
+</head>
+<body>
+  <div class="eyebrow">Activations &middot; NewCo</div>
+  <h1>The gold layer gets acted on, not just queried</h1>
+  <p class="sub">
+    Activations is the fourth native Fivetran stage, right after Transformations. The instant
+    gold.fct_alert_evidence writes a row where severity = 'critical', pattern_confidence_score &ge; 0.85, and the
+    member is already on the members-under-review list &mdash; a corroborated, repeat high-confidence pattern, not
+    a one-off flag &mdash; Activations pushes the alert straight into NICE Actimize Case Manager and auto-opens a
+    fully populated investigation case. No reverse-ETL vendor, no second copy of the data, no analyst re-keying.
+  </p>
+
+  <div class="tiles">
+    <div class="tile"><div class="label">Trigger</div><div class="value">confidence &ge; 0.85</div><div class="note">critical + repeat member under review</div></div>
+    <div class="tile"><div class="label">Destination</div><div class="value">Actimize</div><div class="note">Case Manager &middot; auto-opened case</div></div>
+    <div class="tile"><div class="label">Time to open case</div><div class="value">12 min &rarr; &lt;30 sec</div><div class="note">18 critical alerts / day</div></div>
+  </div>
+
+  <table class="beats">
+    <thead><tr><th style="width:45%">What you say</th><th>What you show</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="say">"Halcyon FCM just tripped layered-cancels spoofing in ZB futures &mdash; third critical
+        alert this week, confidence score 0.91. Today an analyst opens Actimize, keys in the alert ID, member ID,
+        order IDs, pastes an evidence link &mdash; call it 12 minutes. Times 18 critical alerts a day, that's
+        3-plus analyst-hours gone before anyone investigates anything. Watch what happens the second
+        gold.fct_alert_evidence writes this row."</td>
+        <td class="show">Live tail on gold.fct_alert_evidence &mdash; Halcyon FCM row lands: severity critical,
+        confidence 0.91, member already under review.</td>
+      </tr>
+      <tr>
+        <td class="say">"Cut to the Activations sync log &mdash; same row, timestamped four seconds later."</td>
+        <td class="show">Architecture page &rarr; Activations panel &rarr; /activations-live: Segment Definition
+        &rarr; Field Mapping &rarr; Sync Preview &rarr; API Push.</td>
+      </tr>
+      <tr>
+        <td class="say">"Cut to Actimize Case Manager &mdash; case ALT-2026-58841 is already open: subject Halcyon
+        FCM, risk score 91, evidence attached, typology 'spoofing &mdash; layered cancels.'"</td>
+        <td class="show">/activations-live &rarr; Destination Confirmation table, case card rendered with the
+        matching member, risk score, and typology fields.</td>
+      </tr>
+      <tr>
+        <td class="say">"Zero manual entry, zero re-typed order IDs, and the audit trail proves the case opened
+        within seconds of detection &mdash; not whenever an analyst got to it."</td>
+        <td class="show">Before/After framing: 12-minute manual re-keying, once per critical alert, replaced by one
+        governed sync, zero code.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mapping">
+    <div class="h">Field mapping &middot; gold.fct_alert_evidence &rarr; Actimize Case Manager</div>
+    <table class="map">
+      <thead><tr><th>Source column</th><th>Destination field</th></tr></thead>
+      <tbody>
+        <tr><td>alert_id</td><td>case_external_id</td></tr>
+        <tr><td>member_id</td><td>subject_party_id</td></tr>
+        <tr><td>pattern_confidence_score</td><td>risk_score</td></tr>
+        <tr><td>evidence_uri</td><td>evidence_attachment_url</td></tr>
+        <tr><td>pattern_type</td><td>typology_code</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footnote">
+    Current snapshot: 18 critical alerts / day. Closing the critical-alert-to-open-case gap reclaims roughly 3.6
+    analyst-hours daily for investigation instead of data entry, and closes the documented-escalation gap
+    exchanges must show under CFTC Reg AT and SRO surveillance rules. Synthetic data &mdash; not a real exchange.
+  </div>
+</body>
+</html>

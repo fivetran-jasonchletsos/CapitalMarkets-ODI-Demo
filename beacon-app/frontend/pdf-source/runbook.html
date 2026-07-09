@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: 612pt 792pt; margin: 0; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1a1a1a; background: #ffffff;
+  }
+  .page {
+    width: 612pt; height: 792pt; padding: 34pt 40pt;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .brandline { font-size: 9.5pt; font-weight: 700; color: #1a1a1a; }
+  .eyebrow {
+    font-size: 8.5pt; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.14em; color: #152c4a; margin-bottom: 3pt;
+  }
+  .eyebrow.gold { color: #a88a2c; }
+  h1 { font-size: 19pt; margin: 4pt 0 5pt; font-weight: 700; }
+  h2 { font-size: 14pt; margin: 0 0 8pt; font-weight: 700; color: #1a1a1a; }
+  .sub { font-size: 9.5pt; color: #4b5563; margin: 0 0 14pt; line-height: 1.4; }
+
+  .tiles { display: flex; gap: 8pt; margin-bottom: 16pt; }
+  .tile { flex: 1; border: 1pt solid #d9d3c4; border-radius: 3pt; padding: 8pt 9pt; }
+  .tile .label { font-size: 7.3pt; text-transform: uppercase; letter-spacing: 0.09em; color: #6b7280; }
+  .tile .value { font-size: 14.5pt; font-weight: 700; margin-top: 2pt; color: #152c4a; }
+
+  .archrow { display: flex; gap: 6pt; margin-bottom: 8pt; }
+  .archcell { flex: 1; border-top: 2pt solid #a88a2c; padding-top: 5pt; }
+  .archcell .name { font-size: 9.5pt; font-weight: 700; color: #1a1a1a; margin-bottom: 3pt; }
+  .archcell .desc { font-size: 7.8pt; color: #4b5563; line-height: 1.35; }
+  .archnote { font-size: 8pt; color: #4b5563; margin: 6pt 0 14pt; line-height: 1.4; }
+
+  .split { display: flex; gap: 10pt; margin-bottom: 14pt; }
+  .splitcol { flex: 1; border: 1pt solid #d9d3c4; border-radius: 3pt; padding: 8pt 10pt; }
+  .splitcol .h { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3pt; }
+  .splitcol.de .h { color: #152c4a; }
+  .splitcol.biz .h { color: #a88a2c; }
+  .splitcol .path { font-size: 8pt; font-weight: 700; color: #1a1a1a; margin-bottom: 3pt; }
+  .splitcol p { font-size: 7.8pt; color: #4b5563; margin: 0; line-height: 1.35; }
+
+  table.wide { width: 100%; border-collapse: collapse; font-size: 8.3pt; margin-bottom: 10pt; }
+  table.wide th {
+    text-align: left; font-size: 7.3pt; text-transform: uppercase; letter-spacing: 0.08em;
+    color: #6b7280; border-bottom: 1pt solid #d9d3c4; padding: 4pt 6pt;
+  }
+  table.wide td { padding: 6pt; border-bottom: 0.5pt solid #e8e4d8; vertical-align: top; line-height: 1.35; }
+  table.wide tr:last-child td { border-bottom: none; }
+
+  .mantra { font-size: 8.3pt; color: #1a1a1a; line-height: 1.45; border-left: 2pt solid #a88a2c; padding-left: 10pt; margin-top: 6pt; }
+
+  .beat-time { font-size: 8pt; font-weight: 700; color: #a88a2c; margin: 12pt 0 2pt; }
+  .beat-title { font-size: 11.5pt; font-weight: 700; margin-bottom: 6pt; }
+  table.beats { width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 4pt; }
+  table.beats th {
+    text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.09em;
+    color: #6b7280; border-bottom: 1pt solid #d9d3c4; padding: 4pt 7pt;
+  }
+  table.beats td { padding: 6pt 7pt; border-bottom: 0.5pt solid #e8e4d8; vertical-align: top; line-height: 1.4; }
+  .say { color: #1a1a1a; }
+  .show { color: #152c4a; }
+  .pause { font-size: 8pt; color: #4b5563; font-style: italic; margin: 3pt 0 8pt; line-height: 1.35; }
+
+  .footnote { position: absolute; bottom: 30pt; left: 40pt; right: 40pt; font-size: 7.5pt; color: #9ca3af; line-height: 1.5; text-align: center; }
+
+  ul.anti { list-style: none; margin: 0 0 12pt; padding: 0; font-size: 8.5pt; line-height: 1.5; }
+  ul.anti li { margin-bottom: 6pt; padding-left: 10pt; border-left: 2pt solid #d9d3c4; }
+  ul.anti b { color: #7f1d1d; }
+
+  .disc-cols { display: flex; gap: 14pt; }
+  .disc-col { flex: 1; }
+  .disc-col .h { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #152c4a; margin-bottom: 6pt; }
+  .disc-col ul { margin: 0; padding-left: 12pt; font-size: 8.3pt; line-height: 1.5; }
+  .disc-col li { margin-bottom: 7pt; }
+
+  .personas { display: flex; gap: 10pt; margin: 8pt 0 16pt; }
+  .persona { flex: 1; border: 1pt solid #d9d3c4; border-radius: 3pt; padding: 9pt 11pt; }
+  .persona .h { font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4pt; }
+  .persona.de .h { color: #152c4a; }
+  .persona.biz .h { color: #a88a2c; }
+  .persona .path { font-size: 8.3pt; font-weight: 700; color: #1a1a1a; margin-bottom: 4pt; }
+  .persona p { font-size: 7.8pt; color: #4b5563; margin: 0; line-height: 1.4; }
+
+  ul.materials { font-size: 8.5pt; line-height: 1.6; margin: 0 0 14pt; padding-left: 14pt; }
+  .reminder { font-size: 8.3pt; color: #1a1a1a; line-height: 1.45; border-top: 1pt solid #d9d3c4; padding-top: 10pt; margin-top: 6pt; }
+</style>
+</head>
+<body>
+
+  <!-- ============================= PAGE 1 ============================= -->
+  <div class="page">
+    <div class="brandline">Fivetran + dbt Labs</div>
+    <div class="eyebrow gold">CAPITAL MARKETS &middot; DERIVATIVES EXCHANGE INTELLIGENCE</div>
+    <h1>Beacon Markets &middot; 3-Minute Demo Runbook</h1>
+    <p class="sub">
+      Snowflake Summit &middot; Pediment Booth &middot; for the recorded video walkthrough of the Beacon Markets
+      dbt Wizard demo. Looped unattended on the booth screen.
+    </p>
+
+    <div class="tiles">
+      <div class="tile"><div class="label">Manual model build today</div><div class="value">5&ndash;8 days</div></div>
+      <div class="tile"><div class="label">dbt Wizard build</div><div class="value">92 sec</div></div>
+      <div class="tile"><div class="label">VaR exposure unmodeled</div><div class="value">$184M</div></div>
+      <div class="tile"><div class="label">Until Risk Committee</div><div class="value">14 hr</div></div>
+    </div>
+
+    <h2>ODI architecture &middot; sources, lakehouse, consumers</h2>
+    <div class="archrow">
+      <div class="archcell">
+        <div class="name">Fivetran</div>
+        <div class="desc">FIX gateway, market-data feed handlers, clearinghouse, CFTC EDGAR, FINRA, Salesforce member CRM, reference data</div>
+      </div>
+      <div class="archcell">
+        <div class="name">Iceberg + MDLS</div>
+        <div class="desc">Open lakehouse on S3, Snowflake Horizon catalog, ACID snapshots, time travel</div>
+      </div>
+      <div class="archcell">
+        <div class="name">dbt Labs</div>
+        <div class="desc">Bronze &rarr; Silver &rarr; Gold &rarr; Platinum marts, committed as Iceberg snapshots</div>
+      </div>
+      <div class="archcell">
+        <div class="name">dbt Wizard</div>
+        <div class="desc">Build-time AI &middot; 92s authoring of governed gold marts</div>
+      </div>
+      <div class="archcell">
+        <div class="name">Snowflake + Athena + Trino</div>
+        <div class="desc">Same Iceberg bytes, no copies, external catalogs</div>
+      </div>
+    </div>
+    <p class="archnote">
+      One set of files on S3. Three engines read the same Parquet through the Snowflake Horizon catalog.
+      Governed end-to-end: CFTC Reg AT &middot; SRO surveillance rules &middot; row-level access by desk.
+    </p>
+
+    <div class="split">
+      <div class="splitcol de">
+        <div class="h">Data engineers anchor here</div>
+        <div class="path">ODI Architecture &middot; dbt-wizard &middot; Pipeline &middot; Activations</div>
+        <p>Show the loop, the four sub-agents, the materialization, the connector deep-links. This is your DE proof.</p>
+      </div>
+      <div class="splitcol biz">
+        <div class="h">Business users anchor here</div>
+        <div class="path">Trading Floor, Markets, Surveillance, Risk &amp; Clearing, Regulatory</div>
+        <p>Show the answers, the KPI tiles, the ticker, the desk read. The same governed gold layer powers all of it.</p>
+      </div>
+    </div>
+
+    <h2>Frame the demo on business outcomes &mdash; never functionality</h2>
+    <table class="wide">
+      <thead><tr><th style="width:19%">Pain</th><th style="width:19%">Reason</th><th style="width:21%">Impact</th><th style="width:19%">Capability</th><th style="width:22%">Proof</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Chief Risk Officer can't get intraday OI concentration in time for the Risk Committee</td>
+          <td>Every new cut = 5&ndash;8 day DE backlog</td>
+          <td>$184M of house VaR exposure left unmodeled, Risk Committee meets blind</td>
+          <td>Build-time AI on the governed gold layer</td>
+          <td>Live model build in 92 seconds &mdash; on screen</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="mantra">
+      The mantra: the win is not that dbt Wizard can author a model. The win is that the Chief Risk Officer walks
+      into the next Risk Committee meeting with a tested, lineage-tracked answer that did not exist this morning.
+      Every beat below ties to that one sentence.
+    </p>
+  </div>
+
+  <!-- ============================= PAGE 2 ============================= -->
+  <div class="page">
+    <h2 style="font-size:15pt;">The 3-minute script &middot; five beats</h2>
+
+    <div class="beat-time">00:00 &ndash; 00:25</div>
+    <div class="beat-title">Beat 1 &middot; The stakeholder hook</div>
+    <table class="beats">
+      <thead><tr><th style="width:48%">What you say (25s)</th><th>What you show</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="say">"It's Friday morning at Beacon Markets. The Chief Risk Officer needs intraday open-interest
+          concentration by member, by product, in 15-minute buckets, across the rates complex &mdash; for the last
+          five trading days. The Risk Committee meets in 14 hours. Today, an answer like this costs five to eight
+          days of data-engineering work and a missed meeting. We're about to change that."</td>
+          <td class="show">Open the Trading Floor ( / ). The CRO's question and the dbt-wizard callout are the
+          first thing in frame.<br><b>Outcome</b> &rarr; Anchors the audience on a real business question, not a feature.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="beat-time">00:25 &ndash; 00:50</div>
+    <div class="beat-title">Beat 2 &middot; The cost of the gap</div>
+    <table class="beats">
+      <thead><tr><th style="width:48%">What you say (25s)</th><th>What you show</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="say">"There's no gold-layer mart that answers this. Five to eight days from now, after a
+          request, a backlog, a scope, a build, and a peer review, the engineering team might land it. The Risk
+          Committee will have already met. $184 million of house VaR exposure stays unmodeled in the meantime
+          &mdash; and that's just the exposure we can see."</td>
+          <td class="show">Stay on the Trading Floor. Highlight the dbt-wizard callout tile: 92s vs 5&ndash;8 days,
+          $184M at risk.<br><b>Outcome</b> &rarr; Quantifies the cost of the gap. Sets up the 92-second proof.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="beat-time">00:50 &ndash; 02:20</div>
+    <div class="beat-title">Beat 3 &middot; The live build (proof moment &middot; DE-anchor)</div>
+    <table class="beats">
+      <thead><tr><th style="width:48%">What you say (90s)</th><th>What you show</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="say">"We click See the live build. Four sub-agents &mdash; Explorer, Summary, Worker,
+          Verification &mdash; open the dbt project, find the right grain, pull a slice of the silver layer, write
+          the new model, write its tests, and materialize it as an Iceberg snapshot. The viewer sees the SQL appear
+          character by character. By the time we're done talking, the model exists, the tests pass, the lineage
+          graph has updated."</td>
+          <td class="show">Click into /dbt-wizard . Let the playback run at 1x. The step rail moves Discovery &rarr;
+          Schema understanding &rarr; Data inspection &rarr; Model creation &rarr; Test authoring &rarr;
+          Materialization. Terminal-window aesthetic.<br><b>Outcome</b> &rarr; Data engineers see the loop end-to-end.
+          The wow is that the output is a tested, governed asset &mdash; not a snippet pasted into Slack.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="pause">
+      Pause once at: "Worker is deriving the 15-minute bucket from event_ts &mdash; not a spreadsheet-grade
+      approximation." And again at: "Verification is writing a uniqueness test on member &times; product &times;
+      bucket. This is a governed gold asset, not a SQL snippet."
+    </p>
+  </div>
+
+  <!-- ============================= PAGE 3 ============================= -->
+  <div class="page">
+    <div class="beat-time" style="margin-top:0;">02:20 &ndash; 02:45</div>
+    <div class="beat-title">Beat 4 &middot; The outcome (P&amp;L tie-back &middot; business-anchor)</div>
+    <table class="beats">
+      <thead><tr><th style="width:48%">What you say (25s)</th><th>What you show</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="say">"The new mart is materialized. The Risk Committee convenes in 14 hours, not eight days.
+          The Chief Risk Officer walks in with the answer: three clearing members are carrying 61% of rates open
+          interest, concentrated in the last two hours of trading &mdash; a margin-call risk, not a six-month
+          capacity build. And the next time anyone asks this question &mdash; energy, agriculture, equities,
+          anywhere &mdash; the model is already there."</td>
+          <td class="show">Cut to the /dbt-wizard outcome panel &mdash; 92s, tests passing, downstream consumers
+          listed. Then quick scroll through the business-user pages (Markets, Surveillance, Risk &amp; Clearing,
+          Regulatory) so the audience sees the same gold layer powering the desk view.<br><b>Outcome</b> &rarr;
+          Closes the loop from question to action AND shows the business-user surface running on the same data.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="beat-time">02:45 &ndash; 03:00</div>
+    <div class="beat-title">Beat 5 &middot; The architectural ask</div>
+    <table class="beats">
+      <thead><tr><th style="width:48%">What you say (15s)</th><th>What you show</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="say">"Fivetran lands every source &mdash; FIX, market data, clearing, CFTC, FINRA, member
+          CRM. Iceberg on S3 holds the bytes; the Snowflake Horizon catalog governs the snapshots. dbt Labs builds
+          the marts. dbt Wizard authors the gaps. Snowflake, Athena, and Trino all read the gold layer &mdash; and
+          so does NewCo Activations, pushing critical surveillance alerts straight into case management. One set
+          of files, three engines, zero manual re-keying. Want to see how this maps to your gold layer? Stop by the
+          Pediment booth or scan the QR."</td>
+          <td class="show">Final card with the architecture loop, QR code to fivetran.com/contact. Tag dbt Labs
+          co-brand.<br><b>Outcome</b> &rarr; Calls out the architectural pattern. Invites a discovery conversation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 style="margin-top:16pt;">Business outcomes to weave through &mdash; never lead with features</h2>
+    <table class="wide">
+      <thead><tr><th style="width:34%">Outcome the buyer feels</th><th style="width:28%">What it replaces</th><th style="width:38%">How to phrase it</th></tr></thead>
+      <tbody>
+        <tr><td>Risk Committee gets the answer same-day</td><td>5&ndash;8 day DE backlog</td><td>In time for the meeting, not a week late</td></tr>
+        <tr><td>$184M VaR exposure sized in 92 seconds</td><td>Open gap window</td><td>The cost of the gap closed before lunch</td></tr>
+        <tr><td>Reusable governed mart for every future ask</td><td>One-off notebook scripts</td><td>The next person who asks gets it for free</td></tr>
+        <tr><td>CDO does not add headcount to keep up</td><td>Hiring DE backfill</td><td>Your team stops being the bottleneck</td></tr>
+        <tr><td>Auditor sees lineage + tests, not a query history</td><td>Manual evidence packs</td><td>Examiner-ready by default</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================= PAGE 4 ============================= -->
+  <div class="page">
+    <h2>Anti-patterns &middot; what NOT to say</h2>
+    <ul class="anti">
+      <li><b>Don't say:</b> "It runs dbt show against the warehouse and authors a new model file." <b>Say:</b> "Ninety-two seconds from question to materialized answer."</li>
+      <li><b>Don't say:</b> "Cortex Analyst." Cortex is intentionally absent from this demo. The story is build-time AI on the governed lake &mdash; the in-app feature is called dbt Wizard.</li>
+      <li><b>Don't say:</b> "dbt Wizard generates SQL." <b>Say:</b> "dbt Wizard authors a governed asset &mdash; schema contract, tests, lineage, ownership."</li>
+      <li><b>Don't say:</b> "Look at the typing animation." The animation is texture, not the value.</li>
+      <li><b>Don't</b> open with the architecture diagram. Open with the Chief Risk Officer's question. Architecture is the closer.</li>
+      <li><b>Don't</b> skip the business pages. After the wizard finishes, scroll through Markets, Surveillance, Risk &amp; Clearing, Regulatory so the audience sees the persona surface that runs on the same gold layer.</li>
+    </ul>
+
+    <h2>Discovery prompts to anchor before the demo</h2>
+    <div class="disc-cols">
+      <div class="disc-col">
+        <div class="h">Before you press play</div>
+        <ul>
+          <li>"What questions does your Chief Risk Officer ask that your team cannot answer intraday?"</li>
+          <li>"When a desk asks for a new cut of position or surveillance data, what's the average time from ask to merged dbt model?"</li>
+          <li>"How many one-off SQL scripts are sitting in someone's Snowflake history that never made it back into the governed layer?"</li>
+          <li>"Who is your Economic Buyer for new data investment? Likely audience: CRO, CDO, Chief Compliance Officer, or Head of Surveillance."</li>
+        </ul>
+      </div>
+      <div class="disc-col">
+        <div class="h">After the demo lands</div>
+        <ul>
+          <li>"Which of those agent steps &mdash; Discovery, Schema understanding, Data inspection, Model creation, Test authoring, Materialization &mdash; is where your team spends the most time today?"</li>
+          <li>"If we sized a pilot on three of your highest-value recurring Risk Committee questions, what would success look like in 90 days?"</li>
+          <li>"Who needs to be in a 30-minute architecture review to see how this lands on your gold layer? Audience: CRO, CDO, Chief Compliance Officer, or Head of Surveillance."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================= PAGE 5 ============================= -->
+  <div class="page">
+    <h2>Personas at the booth &middot; split the time</h2>
+    <div class="personas">
+      <div class="persona de">
+        <div class="h">Data engineer &middot; 60% of booth time</div>
+        <div class="path">Trading Floor &rarr; dbt-wizard &rarr; ODI Architecture &rarr; Pipeline</div>
+        <p>Lead with the question, show the four sub-agents, then walk the architecture (Fivetran + Iceberg/MDLS +
+        dbt Labs + dbt Wizard + Snowflake/Athena/Trino) and the Pipeline page with real Fivetran connector
+        deep-links.</p>
+      </div>
+      <div class="persona biz">
+        <div class="h">Business user &middot; 40% of booth time</div>
+        <div class="path">Markets, Surveillance, Risk &amp; Clearing, Regulatory</div>
+        <p>After the wizard finishes, drop into the desk pages. Show that the same governed gold layer powers the
+        trading-floor read. The build-time AI is invisible to them &mdash; they see the answer.</p>
+      </div>
+    </div>
+
+    <h2>Required follow-up materials</h2>
+    <ul class="materials">
+      <li>One-pager &middot; Beacon Markets &middot; at fivetran-jasonchletsos.github.io/Fivetran-Demo-Repository/one-pager/capital-markets/</li>
+      <li>Live demo URL &middot; fivetran-jasonchletsos.github.io/CapitalMarkets-ODI-Demo/</li>
+      <li>3-minute walkthrough video (this recording)</li>
+      <li>Architecture diagram on the ODI Architecture tab of the demo</li>
+      <li>Cross-industry credibility &middot; Pediment Bank</li>
+    </ul>
+
+    <p class="reminder">
+      Booth-floor reminder: the demo is built to run unattended on the booth screen. If a prospect walks up
+      mid-playback, do not restart. Pick up the narration where the playback is &mdash; that is also the point. The
+      build finishes whether someone is watching or not. That is the entire pitch.
+    </p>
+
+    <div class="footnote">
+      POWERED BY FIVETRAN + DBT LABS &middot; OPEN DATA INFRASTRUCTURE &middot; BEACON MARKETS IS A FICTIONAL DEMO
+      ENTITY &middot; GENERATED 2026-07-09
+    </div>
+  </div>
+
+</body>
+</html>

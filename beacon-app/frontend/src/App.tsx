@@ -8,6 +8,7 @@ import RegulatoryPage from './pages/RegulatoryPage';
 import ArchitecturePage from './pages/ArchitecturePage';
 import PipelinePage from './pages/PipelinePage';
 import OdiDbtWizardPage from './pages/OdiDbtWizardPage';
+import ActivationLivePage from './pages/ActivationLivePage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/risk" element={<RiskPage />} />
           <Route path="/regulatory" element={<RegulatoryPage />} />
           <Route path="/architecture" element={<ArchitecturePage />} />
+          <Route path="/activations-live" element={<ActivationLivePage />} />
           <Route path="/pipeline" element={<PipelinePage />} />
           <Route path="/dbt-wizard" element={<OdiDbtWizardPage />} />
           <Route path="/about" element={<AboutPage />} />

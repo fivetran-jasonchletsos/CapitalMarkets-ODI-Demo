@@ -8,6 +8,7 @@ const NAV_ITEMS: [string, string][] = [
   ['/risk', 'Risk & Clearing'],
   ['/regulatory', 'Regulatory'],
   ['/architecture', 'ODI Architecture'],
+  ['/activations-live', 'Activations'],
   ['/pipeline', 'Pipeline'],
   ['/dbt-wizard', 'dbt-wizard'],
   ['/about', 'About'],
@@ -164,6 +165,18 @@ export default function Layout() {
               Chicago HQ with New York and London hubs.
               Synthetic data — ODI architecture demonstration only. Not a real exchange.
             </p>
+            <a
+              href={`${import.meta.env.BASE_URL || '/'}Beacon-Markets-3min-Demo-Runbook.pdf`}
+              download
+              className="mt-3 inline-flex items-center gap-2 border border-navy-600 bg-navy-800 px-2.5 py-1.5 text-[11px] font-semibold text-white hover:border-gold hover:bg-navy-700 transition-colors"
+            >
+              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <path d="M14 2v6h6" />
+                <path d="M12 18v-6" /><path d="M9 15l3 3 3-3" />
+              </svg>
+              3-min demo runbook (PDF)
+            </a>
           </div>
           <div>
             <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-gold-bright mb-2">Data Pipeline</div>
@@ -171,8 +184,15 @@ export default function Layout() {
               FIX gateway, market data handlers, clearinghouse, CFTC EDGAR, Salesforce member CRM
               into Fivetran, then Iceberg (MDLS) on S3, then Snowflake / Athena / Trino reading the
               same bytes via external catalogs, then Fivetran-triggered dbt Labs (bronze, silver,
-              gold), then static JSON snapshot to React.
+              gold), then NewCo Activations syncing critical alerts to NICE Actimize Case Manager,
+              then static JSON snapshot to React.
             </p>
+            <div className="mt-3 flex items-center gap-2 text-[11px]">
+              <span className="inline-flex items-center gap-1.5 border border-navy-600 bg-navy-800 px-2 py-1">
+                <span className="inline-flex items-center justify-center h-4 px-1 text-[9px] font-bold text-white" style={{ background: '#0073FF' }}>N</span>
+                <span className="font-semibold text-white">NewCo</span>
+              </span>
+            </div>
           </div>
           <div>
             <div className="text-[11px] font-mono uppercase tracking-[0.16em] text-gold-bright mb-2">Open Standards</div>
